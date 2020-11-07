@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+
+  namespace :admin do
+    resources :users
+  end
+
   # ルート（/）にアクセスした時にタスクのindexを取得する記述
   root to: 'tasks#index'
   resources :tasks
