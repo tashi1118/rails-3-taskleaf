@@ -16,9 +16,15 @@ class TasksController < ApplicationController
   end
 
   def create
-    task = Task.new(task_params)
-    task.save!
-    redirect_to tasks_url, notice: "タスク「#{task.name}」を登録しました。"
+    # @taskにすることで、検証を行なったtaskのデータをビューに送ることができる。前回入力値と検証エラーの内容
+    @task = Task.new(task_params)
+
+    if @task.save
+      redirect_to @task, notice: "タスク「#{@task.name}」を登録しました。"
+    else
+      # falseの場合は登録用のフォーム画面を再表示させる
+      render :new
+    end
   end
 
   def update
